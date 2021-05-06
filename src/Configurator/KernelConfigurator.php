@@ -79,6 +79,7 @@ final class KernelConfigurator
             'doctrine',
             [
                 'dbal' => [
+                    'override_url' => true,
                     'url' => '%env(DATABASE_URL)%',
                 ],
                 'orm' => [
