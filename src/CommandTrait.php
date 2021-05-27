@@ -1,6 +1,6 @@
 <?php
 
-namespace SoureCode\Bundle\Token\Tests\TestUtils;
+namespace SoureCode\BundleTest;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Exception\RuntimeException;

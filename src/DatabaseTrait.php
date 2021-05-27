@@ -1,6 +1,6 @@
 <?php
 
-namespace SoureCode\Bundle\Token\Tests\TestUtils;
+namespace SoureCode\BundleTest;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
