@@ -3,8 +3,6 @@
 namespace SoureCode\BundleTest;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
-use function in_array;
 use LogicException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -19,10 +17,11 @@ trait DatabaseTrait
     {
         if (class_exists(Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class)) {
             if (!method_exists($this, 'execute')) {
-                throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
+                throw new LogicException(
+                    'Missing required CommandTrait, try to add the CommandTrait to your test class.'
+                );
             }
 
-            // Programmatically to complicated
             $this->execute(
                 [
                     'command' => 'doctrine:fixtures:load',
@@ -55,45 +54,43 @@ trait DatabaseTrait
 
     protected function databaseDrop(): void
     {
-        $entityManager = $this->getEntityManager();
-        $connection = $entityManager->getConnection();
-        $schemaManager = $connection->getSchemaManager();
-        $databaseName = $connection->getDatabase();
-
-        $exist = in_array($databaseName, $schemaManager->listDatabases());
-
-        if ($exist) {
-            $schemaManager->dropDatabase($databaseName);
+        if (!method_exists($this, 'execute')) {
+            throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
         }
-    }
 
-    protected function getEntityManager()
-    {
-        return static::$entityManager;
+        $this->execute(
+            [
+                'command' => 'doctrine:database:create',
+                '--no-interaction' => true,
+                '--force' => true,
+                '--if-exists' => true,
+            ]
+        );
     }
 
     protected function databaseCreate(): void
     {
-        $entityManager = $this->getEntityManager();
-        $connection = $entityManager->getConnection();
-        $schemaManager = $connection->getSchemaManager();
-        $databaseName = $connection->getDatabase();
-
-        $exist = in_array($databaseName, $schemaManager->listDatabases());
-
-        if (!$exist) {
-            $schemaManager->createDatabase($databaseName);
+        if (!method_exists($this, 'execute')) {
+            throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
         }
+
+        $this->execute(
+            [
+                'command' => 'doctrine:database:create',
+                '--no-interaction' => true,
+            ]
+        );
     }
 
     protected function databaseMigrate(): void
     {
         if (class_exists(Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class)) {
             if (!method_exists($this, 'execute')) {
-                throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
+                throw new LogicException(
+                    'Missing required CommandTrait, try to add the CommandTrait to your test class.'
+                );
             }
 
-            // Programmatically to complicated
             $this->execute(
                 [
                     'command' => 'doctrine:migrations:migrate',
@@ -105,12 +102,22 @@ trait DatabaseTrait
 
     protected function databaseUpdate(): void
     {
-        $manager = $this->getEntityManager();
-        $schemaTool = new SchemaTool($manager);
+        if (!method_exists($this, 'execute')) {
+            throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
+        }
 
-        $metadata = $manager->getMetadataFactory()->getAllMetadata();
+        $this->execute(
+            [
+                'command' => 'doctrine:schema:update',
+                '--force' => true,
+                '--no-interaction' => true,
+            ]
+        );
+    }
 
-        $schemaTool->updateSchema($metadata, true);
+    protected function getEntityManager()
+    {
+        return static::$entityManager;
     }
 
     protected function tearDownDatabase(): void
