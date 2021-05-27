@@ -60,8 +60,7 @@ trait DatabaseTrait
 
         $this->execute(
             [
-                'command' => 'doctrine:database:create',
-                '--no-interaction' => true,
+                'command' => 'doctrine:database:drop',
                 '--force' => true,
                 '--if-exists' => true,
             ]
@@ -78,6 +77,7 @@ trait DatabaseTrait
             [
                 'command' => 'doctrine:database:create',
                 '--no-interaction' => true,
+                '--if-not-exists' => true,
             ]
         );
     }
