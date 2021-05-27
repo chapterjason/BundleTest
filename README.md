@@ -1,4 +1,4 @@
 
 # BundleTest
 
-Provides a test kernel and different test cases to test out bundles.
+Provides several traits to enhance [nyholm/symfony-bundle-test](https://github.com/SymfonyTest/symfony-bundle-test).
