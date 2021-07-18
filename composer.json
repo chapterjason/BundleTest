@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=8.0",
-        "symfony/framework-bundle": "^5.2",
+        "symfony/framework-bundle": "^5.3",
         "doctrine/persistence": "^2.2",
         "nyholm/symfony-bundle-test": "^1.7"
     },
