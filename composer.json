@@ -14,11 +14,17 @@
             "SoureCode\\BundleTest\\": "src/"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/chapterjason/symfony-bundle-test.git"
+        }
+    ],
     "require": {
         "php": ">=8.0",
         "symfony/framework-bundle": "^5.3",
         "doctrine/persistence": "^2.2",
-        "nyholm/symfony-bundle-test": "^1.7"
+        "nyholm/symfony-bundle-test": "dev-bugfix/fix-kernel-routing"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^v2.18",
