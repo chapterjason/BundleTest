@@ -17,9 +17,7 @@ trait DatabaseTrait
     {
         if (class_exists(Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class)) {
             if (!method_exists($this, 'execute')) {
-                throw new LogicException(
-                    'Missing required CommandTrait, try to add the CommandTrait to your test class.'
-                );
+                throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
             }
 
             $this->execute(
@@ -86,9 +84,7 @@ trait DatabaseTrait
     {
         if (class_exists(Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class)) {
             if (!method_exists($this, 'execute')) {
-                throw new LogicException(
-                    'Missing required CommandTrait, try to add the CommandTrait to your test class.'
-                );
+                throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
             }
 
             $this->execute(
