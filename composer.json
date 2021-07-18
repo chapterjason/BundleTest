@@ -14,6 +14,11 @@
             "SoureCode\\BundleTest\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SoureCode\\BundleTest\\Tests\\": "tests/"
+        }
+    },
     "repositories": [
         {
             "type": "vcs",
@@ -27,6 +32,9 @@
         "nyholm/symfony-bundle-test": "dev-bugfix/fix-kernel-routing"
     },
     "require-dev": {
+        "symfony/mailer": "^5.3",
+        "symfony/mime": "^5.3",
+        "phpunit/phpunit": "^9.5",
         "friendsofphp/php-cs-fixer": "^v2.18",
         "vimeo/psalm": "^4.4",
         "weirdan/doctrine-psalm-plugin": "^1.0"
@@ -34,7 +42,8 @@
     "scripts": {
         "psalm": "vendor/bin/psalm --show-info=false --no-cache --output-format=phpstorm",
         "cs-fix": "vendor/bin/php-cs-fixer fix",
-        "cs-check": "vendor/bin/php-cs-fixer fix --dry-run"
+        "cs-check": "vendor/bin/php-cs-fixer fix --dry-run",
+        "test": "vendor/bin/phpunit"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
