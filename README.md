@@ -1,4 +1,4 @@
 
-# BundleTest
+# Test Component
 
-Provides several traits to enhance [nyholm/symfony-bundle-test](https://github.com/SymfonyTest/symfony-bundle-test).
+Provides several traits to enhance tests with [symfony](https://github.com/symfony/symfony).

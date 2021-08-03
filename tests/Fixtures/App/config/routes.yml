@@ -1,0 +1,11 @@
+app_home:
+    path: /
+
+app_blog:
+    path: /blog
+
+app_blog_article_index:
+    path: /blog/article
+
+app_blog_article_show:
+    path: /blog/article/{id}

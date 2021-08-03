@@ -1,124 +1,40 @@
 <?php
 
-namespace SoureCode\BundleTest;
+namespace SoureCode\Component\Test;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManagerInterface;
-use LogicException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityRepository;
 
 trait DatabaseTrait
 {
-    protected static ?EntityManagerInterface $entityManager = null;
-
     /**
-     * @param string[] $groups
+     * @template T
+     *
+     * @param class-string<T> $className
+     * @param string|null     $managerName
+     *
+     * @return EntityRepository<T>
      */
-    protected function databaseLoadFixtures(array $groups, bool $append = false): void
+    protected function getRepository(string $className, string $managerName = null): EntityRepository
     {
-        if (class_exists(Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class)) {
-            if (!method_exists($this, 'execute')) {
-                throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
-            }
+        $manager = $this->getEntityManager($managerName);
 
-            $this->execute(
-                [
-                    'command' => 'doctrine:fixtures:load',
-                    '--no-interaction' => true,
-                    '--append' => $append,
-                    '--group' => $groups,
-                ]
-            );
-        }
+        return $manager->getRepository($className);
     }
 
-    protected function setUpDatabase(bool $reset = true): void
+    protected function getEntityManager($managerName = null): EntityManagerInterface
     {
-        /**
-         * @var ContainerInterface $container
-         */
-        $container = static::$kernel->getContainer();
+        $doctrine = $this->getDoctrine();
+        $managerName = $managerName ?? $doctrine->getDefaultManagerName();
 
-        $doctrine = $container->get('doctrine');
-
-        static::$entityManager = $doctrine->getManager();
-
-        if ($reset) {
-            $this->databaseDrop();
-            $this->databaseCreate();
-            $this->databaseMigrate();
-            $this->databaseUpdate();
-        }
+        return $doctrine->getManager($managerName);
     }
 
-    protected function databaseDrop(): void
+    protected function getDoctrine(): Registry
     {
-        if (!method_exists($this, 'execute')) {
-            throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
-        }
+        $container = static::getContainer();
 
-        $this->execute(
-            [
-                'command' => 'doctrine:database:drop',
-                '--force' => true,
-                '--if-exists' => true,
-            ]
-        );
-    }
-
-    protected function databaseCreate(): void
-    {
-        if (!method_exists($this, 'execute')) {
-            throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
-        }
-
-        $this->execute(
-            [
-                'command' => 'doctrine:database:create',
-                '--no-interaction' => true,
-                '--if-not-exists' => true,
-            ]
-        );
-    }
-
-    protected function databaseMigrate(): void
-    {
-        if (class_exists(Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class)) {
-            if (!method_exists($this, 'execute')) {
-                throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
-            }
-
-            $this->execute(
-                [
-                    'command' => 'doctrine:migrations:migrate',
-                    '--no-interaction' => true,
-                ]
-            );
-        }
-    }
-
-    protected function databaseUpdate(): void
-    {
-        if (!method_exists($this, 'execute')) {
-            throw new LogicException('Missing required CommandTrait, try to add the CommandTrait to your test class.');
-        }
-
-        $this->execute(
-            [
-                'command' => 'doctrine:schema:update',
-                '--force' => true,
-                '--no-interaction' => true,
-            ]
-        );
-    }
-
-    protected function getEntityManager()
-    {
-        return static::$entityManager;
-    }
-
-    protected function tearDownDatabase(): void
-    {
-        static::$entityManager->close();
-        static::$entityManager = null; // avoid memory leaks
+        return $container->get('doctrine');
     }
 }

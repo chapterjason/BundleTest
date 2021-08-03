@@ -20,9 +20,10 @@
         <ini name="error_reporting" value="-1"/>
         <ini name="memory_limit" value="512M" />
         <server name="SHELL_VERBOSITY" value="-1"/>
+        <env name="DATABASE_URL" value="postgresql://main:main@127.0.0.1:5432/main?serverVersion=13&amp;charset=utf8"/>
     </php>
     <testsuites>
-        <testsuite name="SoureCode/BundleTest Test Suite">
+        <testsuite name="SoureCode/TestComponent Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
