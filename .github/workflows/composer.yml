@@ -1,0 +1,28 @@
+name: "Composer validate"
+
+on:
+    pull_request:
+
+jobs:
+    validate:
+        name: "Composer validate"
+        runs-on: ${{ matrix.operating-system }}
+
+        strategy:
+            matrix:
+                php-version:
+                    - "8.0"
+                operating-system:
+                    - "ubuntu-latest"
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   name: "Install PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    coverage: "pcov"
+                    php-version: "${{ matrix.php-version }}"
+                    ini-values: memory_limit=-1
+
+            -   name: Validate composer.json and composer.lock
+                run: composer validate
