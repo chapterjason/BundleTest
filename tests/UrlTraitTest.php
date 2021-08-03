@@ -61,5 +61,4 @@ class UrlTraitTest extends KernelTestCase
             'routingFile' => __DIR__.'/Fixtures/App/config/routes.yml',
         ]);
     }
-
 }

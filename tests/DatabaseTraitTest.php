@@ -61,5 +61,4 @@ class DatabaseTraitTest extends KernelTestCase
             ],
         ]);
     }
-
 }

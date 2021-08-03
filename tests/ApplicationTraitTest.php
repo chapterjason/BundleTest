@@ -4,10 +4,10 @@ namespace SoureCode\Component\Test\Tests;
 
 use InvalidArgumentException;
 use SoureCode\Component\Test\ApplicationTrait;
+use SoureCode\Component\Test\Tests\Fixtures\App\WorkaroundKernel;
 use SoureCode\Component\Test\Tests\Fixtures\BarApplication;
 use SoureCode\Component\Test\Tests\Fixtures\FooApplication;
 use SoureCode\Component\Test\Tests\Fixtures\InvalidApplication;
-use SoureCode\Component\Test\Tests\Fixtures\App\WorkaroundKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Exception\RuntimeException;

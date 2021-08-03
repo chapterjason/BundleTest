@@ -12,7 +12,6 @@ trait DatabaseTrait
      * @template T
      *
      * @param class-string<T> $className
-     * @param string|null     $managerName
      *
      * @return EntityRepository<T>
      */
